@@ -33,7 +33,6 @@ form.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(event) {
   event.preventDefault();
-
   const QUERY = form.elements.query.value.trim();
 
   gallery.innerHTML = '';

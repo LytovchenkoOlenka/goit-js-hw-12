@@ -1,12 +1,10 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import cross from '../img/bi_x-octagon.png';
-
 import axios from 'axios';
 
 const KEY = '42691654-856ee9298c14d5c2eed97729f';
 const baseURL = ' https://pixabay.com/api/';
-
 const loader = document.querySelector('.loader');
 
 export async function searchImages(keyword, currentPage, itemsPerPage) {
