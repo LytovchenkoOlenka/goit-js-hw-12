@@ -10,24 +10,11 @@ const baseURL = ' https://pixabay.com/api/';
 const loader = document.querySelector('.loader');
 
 export async function searchImages(keyword, currentPage, itemsPerPage) {
-  // axios.defaults.headers.common['key'] = KEY;
-  // axios.defaults.baseURL = '<https://pixabay.com/api/>';
-  // axios.defaults.q = `${keyword}`;
-  // loader.style.display = 'block';
-
   try {
     const response = await axios.get(
       `${baseURL}?key=${KEY}&q=${keyword}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemsPerPage}&page=${currentPage}`
     );
-    // {
-    //   params: {
-    //     image_type: photo,
-    //     orientation: horizontal,
-    //     safesearch: true,
-    //     _limit: 15,
-    //     // q: `${keyword}`,
-    //   },
-    // }
+
     if (response.data.hits.length === 0) {
       iziToast.error({
         title: '',
