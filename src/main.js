@@ -33,7 +33,7 @@ form.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(event) {
   event.preventDefault();
-  currentPage = 1``;
+  currentPage = 1;
   loadMoreBtn.style.display = 'none';
   const QUERY = form.elements.query.value.trim();
 
@@ -53,15 +53,17 @@ function handleFormSubmit(event) {
       loadMoreBtn.style.display = 'block';
       lightbox.refresh();
     })
-    .catch(error => {
-      iziToast.error({
-        title: '',
-        message: `Error${error}`,
-        backgroundColor: '#EF4040',
-        messageColor: '#ffffff',
-        position: 'topRight',
-        iconUrl: cross,
-      });
+    .catch(() => {
+      loadMoreBtn.style.display = 'none';
+      loader.style.display = 'none';
+      // iziToast.error({
+      //   title: '',
+      //   message: `Error${error}`,
+      //   backgroundColor: '#EF4040',
+      //   messageColor: '#ffffff',
+      //   position: 'topRight',
+      //   iconUrl: cross,
+      // });
     })
     .finally(() => {
       form.reset();

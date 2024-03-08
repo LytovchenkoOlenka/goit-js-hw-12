@@ -15,7 +15,7 @@ export async function searchImages(keyword, currentPage, itemsPerPage) {
     );
 
     if (response.data.hits.length === 0) {
-      iziToast.error({
+      return iziToast.error({
         title: '',
         message:
           'Sorry, there are no images matching your search query. Please try again!',
@@ -24,10 +24,8 @@ export async function searchImages(keyword, currentPage, itemsPerPage) {
         position: 'topRight',
         iconUrl: cross,
       });
-    } else {
-      loader.style.display = 'none';
-      return response.data;
     }
+    return response.data;
   } catch (error) {
     iziToast.error({
       title: '',
