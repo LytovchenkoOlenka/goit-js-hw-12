@@ -23,7 +23,7 @@ const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 const loadMoreBtn = document.querySelector('.load-more-btn');
 
-let currentPage = 1;
+let currentPage;
 let itemsPerPage = 15;
 let currentQuery;
 let totalPages;
@@ -33,6 +33,8 @@ form.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(event) {
   event.preventDefault();
+  currentPage = 1;
+  loadMoreBtn.style.display = 'none';
   const QUERY = form.elements.query.value.trim();
 
   gallery.innerHTML = '';
@@ -49,9 +51,8 @@ function handleFormSubmit(event) {
       totalPages = Math.ceil(data.totalHits / itemsPerPage);
       addMarkup(data);
       lightbox.refresh();
-      form.reset();
-      loader.style.display = 'none';
-      loadMoreBtn.style.display = 'none';
+
+      console.log(currentPage);
     })
     .catch(error => {
       iziToast.error({
@@ -64,7 +65,9 @@ function handleFormSubmit(event) {
       });
     })
     .finally(() => {
+      form.reset();
       loadMoreBtn.style.display = 'block';
+      loader.style.display = 'none';
     });
 }
 
@@ -72,7 +75,11 @@ loadMoreBtn.addEventListener('click', handleLoadMore);
 
 async function handleLoadMore() {
   loader.style.display = 'block';
+
   currentPage += 1;
+  // totalPages += 1;
+  console.log(currentPage);
+  // console.log(totalPages);
 
   if (currentPage === totalPages) {
     loadMoreBtn.style.display = 'none';
