@@ -74,12 +74,9 @@ function handleFormSubmit(event) {
 loadMoreBtn.addEventListener('click', handleLoadMore);
 
 async function handleLoadMore() {
+  loadMoreBtn.style.display = 'none';
   loader.style.display = 'block';
-
   currentPage += 1;
-  // totalPages += 1;
-  console.log(currentPage);
-  // console.log(totalPages);
 
   if (currentPage === totalPages) {
     loadMoreBtn.style.display = 'none';
@@ -100,6 +97,7 @@ async function handleLoadMore() {
     smoothScrollBy();
     lightbox.refresh();
     loader.style.display = 'none';
+    loadMoreBtn.style.display = 'block';
   } catch (error) {
     iziToast.error({
       title: '',
