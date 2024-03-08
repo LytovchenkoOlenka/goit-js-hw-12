@@ -33,7 +33,7 @@ form.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(event) {
   event.preventDefault();
-  currentPage = 1;
+  currentPage = 1``;
   loadMoreBtn.style.display = 'none';
   const QUERY = form.elements.query.value.trim();
 
@@ -50,9 +50,8 @@ function handleFormSubmit(event) {
       currentQuery = QUERY;
       totalPages = Math.ceil(data.totalHits / itemsPerPage);
       addMarkup(data);
+      loadMoreBtn.style.display = 'block';
       lightbox.refresh();
-
-      console.log(currentPage);
     })
     .catch(error => {
       iziToast.error({
@@ -66,7 +65,6 @@ function handleFormSubmit(event) {
     })
     .finally(() => {
       form.reset();
-      loadMoreBtn.style.display = 'block';
       loader.style.display = 'none';
     });
 }
@@ -80,6 +78,7 @@ async function handleLoadMore() {
 
   if (currentPage === totalPages) {
     loadMoreBtn.style.display = 'none';
+    loader.style.display = 'none';
     return iziToast.info({
       position: 'topRight',
       message: "We're sorry, but you've reached the end of search results.",
