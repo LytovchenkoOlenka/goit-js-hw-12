@@ -50,20 +50,23 @@ function handleFormSubmit(event) {
       currentQuery = QUERY;
       totalPages = Math.ceil(data.totalHits / itemsPerPage);
       addMarkup(data);
-      loadMoreBtn.style.display = 'block';
       lightbox.refresh();
+
+      data.totalHits < itemsPerPage
+        ? //думаю, тут не дуже логічно виводити повідомлення "We're sorry, but you've reached the end of search results.". Бо й так зрозуміло, що картинок тільки n. Тобто користувач не "дійшов до краю".
+          (loadMoreBtn.style.display = 'none')
+        : (loadMoreBtn.style.display = 'block');
     })
-    .catch(() => {
-      loadMoreBtn.style.display = 'none';
-      loader.style.display = 'none';
+    .catch(error => {
       // iziToast.error({
       //   title: '',
-      //   message: `Error${error}`,
+      // message: `Error${error}`,
       //   backgroundColor: '#EF4040',
       //   messageColor: '#ffffff',
       //   position: 'topRight',
       //   iconUrl: cross,
       // });
+      console.log(`Error:${error}`);
     })
     .finally(() => {
       form.reset();

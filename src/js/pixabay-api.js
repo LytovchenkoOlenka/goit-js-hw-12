@@ -5,8 +5,8 @@ import axios from 'axios';
 
 const KEY = '42691654-856ee9298c14d5c2eed97729f';
 const baseURL = ' https://pixabay.com/api/';
-const loader = document.querySelector('.loader');
-const loadMoreBtn = document.querySelector('.load-more-btn');
+// const loader = document.querySelector('.loader');
+// const loadMoreBtn = document.querySelector('.load-more-btn');
 
 export async function searchImages(keyword, currentPage, itemsPerPage) {
   try {
