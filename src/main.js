@@ -34,7 +34,6 @@ form.addEventListener('submit', handleFormSubmit);
 function handleFormSubmit(event) {
   event.preventDefault();
   currentPage = 1;
-  loadMoreBtn.style.display = 'none';
   const QUERY = form.elements.query.value.trim();
 
   gallery.innerHTML = '';
@@ -52,10 +51,12 @@ function handleFormSubmit(event) {
       addMarkup(data);
       lightbox.refresh();
 
-      data.totalHits < itemsPerPage
-        ? //думаю, тут не дуже логічно виводити повідомлення "We're sorry, but you've reached the end of search results.". Бо й так зрозуміло, що картинок тільки n. Тобто користувач не "дійшов до краю".
-          (loadMoreBtn.style.display = 'none')
-        : (loadMoreBtn.style.display = 'block');
+      if (data.totalHits <= itemsPerPage) {
+        iziToastInfo();
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'block';
+      }
     })
     .catch(error => {
       // iziToast.error({
@@ -77,17 +78,13 @@ function handleFormSubmit(event) {
 loadMoreBtn.addEventListener('click', handleLoadMore);
 
 async function handleLoadMore() {
-  loadMoreBtn.style.display = 'none';
   loader.style.display = 'block';
   currentPage += 1;
 
   if (currentPage === totalPages) {
+    iziToastInfo();
     loadMoreBtn.style.display = 'none';
     loader.style.display = 'none';
-    return iziToast.info({
-      position: 'topRight',
-      message: "We're sorry, but you've reached the end of search results.",
-    });
   }
 
   try {
@@ -101,7 +98,6 @@ async function handleLoadMore() {
     smoothScrollBy();
     lightbox.refresh();
     loader.style.display = 'none';
-    loadMoreBtn.style.display = 'block';
   } catch (error) {
     iziToast.error({
       title: '',
@@ -119,5 +115,12 @@ function smoothScrollBy() {
   window.scrollBy({
     top: cardHeight * 2,
     behavior: 'smooth',
+  });
+}
+
+function iziToastInfo() {
+  iziToast.info({
+    position: 'topRight',
+    message: "We're sorry, but you've reached the end of search results.",
   });
 }
